@@ -4,13 +4,14 @@ import { mailConfig } from "../config/config.js";
 
 export async function sendEmails(emails) {
   const { user, pass } = mailConfig;
-  let isError;
 
+  // отримати цiну btc
   const price = await getRate("UAH");
   if (price.name === "AxiosError") {
     return;
   }
 
+  // iнiцiалiзацiя поштового сервiсу
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -21,6 +22,7 @@ export async function sendEmails(emails) {
     },
   });
 
+  // надсилання листiв
   for (const email of emails) {
     try {
       transporter.sendMail({
@@ -30,8 +32,8 @@ export async function sendEmails(emails) {
         html: `BTC/UAH: <strong>${price}</strong>.`,
       });
     } catch (err) {
+      console.log(`Помилка надсилання листа на пошту ${email}`)
       console.error(err);
-      isError = true;
     }
   }
 }
