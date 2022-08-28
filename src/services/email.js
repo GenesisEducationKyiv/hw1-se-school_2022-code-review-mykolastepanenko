@@ -5,13 +5,11 @@ import { mailConfig } from "../config/config.js";
 export async function sendEmails(emails) {
   const { user, pass, host, port } = mailConfig;
 
-  // отримати цiну btc
   const price = await getRate("UAH");
   if (!price.ok) {
     return { ok: false, error: price.error };
   }
 
-  // iнiцiалiзацiя поштового сервiсу
   const transporter = nodemailer.createTransport({
     host,
     port,
