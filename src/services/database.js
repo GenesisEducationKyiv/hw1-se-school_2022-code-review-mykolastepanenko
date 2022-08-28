@@ -9,15 +9,7 @@ export async function writeEmail(email) {
   const input = fs.createReadStream(fileUrl, "utf-8");
   const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
 
-  let isExistsEmail = false;
-
-  // перевiрка iснування email
-  for await (const line of lines) {
-    if (line === email) {
-      isExistsEmail = true;
-      break;
-    }
-  }
+  let isExistsEmail = await isEmailExists(lines, email);
 
   // потік читання більше не використовується
   // отже закриємо його
@@ -62,4 +54,12 @@ export async function getEmails() {
   }
 
   return emails;
+}
+
+async function isEmailExists(lines, email){
+  for await (const line of lines) {
+    if (line === email) {
+      return true;
+    }
+  }
 }
