@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { checkHeader } from "../../../middleware/validation.js";
 import * as controller from "../../../controllers/subscription.js";
 const sendEmails = Router();
 
-sendEmails.post("/", checkHeader, (req, res) => {
+sendEmails.post("/", (req, res) => {
   controller.sendEmails(req, res);
 });
 

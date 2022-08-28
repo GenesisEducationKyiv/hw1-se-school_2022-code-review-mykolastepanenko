@@ -1,15 +1,11 @@
-export function checkHeader(req, res, next) {
-  // if (req.headers["content-type"] !== "application/json") {
-  //   res.status(400).send("Not application/json header");
-  //   return;
-  // }
-  // next();
+export function setDefaultHeader(req, res, next) {
   res.header("Content-Type", "application/json")
   next()
 }
 
 export function checkEmail(req, res, next) {
   const email = req.body.email;
+  console.log(req.body)
   if (!email) {
     res.status(400).send("Email is required");
     return;
