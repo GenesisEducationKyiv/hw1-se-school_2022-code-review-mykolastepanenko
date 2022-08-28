@@ -5,7 +5,6 @@ export function setDefaultHeader(req, res, next) {
 
 export function checkEmail(req, res, next) {
   const email = req.body.email;
-  console.log(req.body)
   if (!email) {
     res.status(400).send("Email is required");
     return;

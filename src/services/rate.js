@@ -6,8 +6,8 @@ export async function getRate(currency) {
       `https://api.coinbase.com/v2/prices/spot?currency=${currency}`
     );
     const price = response.data.data.amount;
-    return price;
+    return { ok: true, value: price };
   } catch (err) {
-    return err;
+    return { ok: false, error: "Couln't get BTC price" };
   }
 }

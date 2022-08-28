@@ -18,6 +18,11 @@ export async function subscribe(req, res) {
 
 export async function sendEmails(req, res) {
   const emails = await getEmails();
-  await service.sendEmails(emails);
-  res.status(200).send("E-mail'и відправлено");
+  const result = await service.sendEmails(emails);
+  if (result.ok) {
+    res.status(200).send("E-mail'и відправлено");
+  } else {
+    console.error("ERROR:", result?.error);
+    res.status(400).send("Invalid status value");
+  }
 }

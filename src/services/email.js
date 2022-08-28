@@ -7,8 +7,8 @@ export async function sendEmails(emails) {
 
   // отримати цiну btc
   const price = await getRate("UAH");
-  if (price.name === "AxiosError") {
-    return;
+  if (!price.ok) {
+    return { ok: false, error: price.error };
   }
 
   // iнiцiалiзацiя поштового сервiсу
@@ -29,11 +29,12 @@ export async function sendEmails(emails) {
         from: user,
         to: email,
         subject: "Bitcoin price by Mykola Stepanenko",
-        html: `BTC/UAH: <strong>${price}</strong>.`,
+        html: `BTC/UAH: <strong>${price.value}</strong>.`,
       });
     } catch (err) {
       console.log(`Помилка надсилання листа на пошту ${email}`);
       console.error(err);
     }
   }
+  return { ok: true };
 }
