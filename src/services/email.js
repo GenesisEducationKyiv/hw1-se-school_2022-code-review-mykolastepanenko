@@ -3,7 +3,7 @@ import { getRate } from "./rate.js";
 import { mailConfig } from "../config/config.js";
 
 export async function sendEmails(emails) {
-  const { user, pass } = mailConfig;
+  const { user, pass, host, port } = mailConfig;
 
   // отримати цiну btc
   const price = await getRate("UAH");
@@ -13,8 +13,8 @@ export async function sendEmails(emails) {
 
   // iнiцiалiзацiя поштового сервiсу
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host,
+    port,
     secure: false,
     auth: {
       user: user,
@@ -32,7 +32,7 @@ export async function sendEmails(emails) {
         html: `BTC/UAH: <strong>${price}</strong>.`,
       });
     } catch (err) {
-      console.log(`Помилка надсилання листа на пошту ${email}`)
+      console.log(`Помилка надсилання листа на пошту ${email}`);
       console.error(err);
     }
   }

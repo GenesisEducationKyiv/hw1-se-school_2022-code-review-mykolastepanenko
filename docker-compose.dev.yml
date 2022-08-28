@@ -8,4 +8,4 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - C:\Users\user\Desktop\learn\тестовые\genesis-test:/genesis-test
+      - C:\Users\user\Desktop\learn\genesis-homework\hw1-se-school_2022-code-review-mykolastepanenko:/genesis-test
