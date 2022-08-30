@@ -3,8 +3,6 @@ import * as controller from "../../../controllers/rate.js";
 
 const rate = Router();
 
-rate.get("/", (req, res) => {
-  controller.getRate(req, res);
-});
+rate.get("/", controller.getRate);
 
 export default rate;

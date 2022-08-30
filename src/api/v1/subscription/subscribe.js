@@ -4,8 +4,6 @@ import { checkEmail } from "../../../middleware/validation.js";
 
 const subscribe = Router();
 
-subscribe.post("/", checkEmail, (req, res) => {
-  controller.subscribe(req, res);
-});
+subscribe.post("/", controller.subscribe);
 
 export default subscribe;
