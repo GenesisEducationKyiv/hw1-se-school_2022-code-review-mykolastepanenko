@@ -1,6 +1,7 @@
 import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
+import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
 
 const fileUrl = "./src/database/emails.txt";
 
@@ -13,7 +14,9 @@ export async function writeEmail(email) {
   input.close();
 
   if (!isExistsEmail) {
-    const output = fs.createWriteStream(fileUrl, { flags: "a" }); //флаг а для дозапису у файл
+    const output = fs.createWriteStream(fileUrl, {
+      flags: ALLOW_APPENDING_FLAG,
+    });
     const stats = await fs.promises.stat(fileUrl);
     const size = stats.size;
 
@@ -42,7 +45,7 @@ export async function getEmails() {
   return emails;
 }
 
-async function isEmailExists(lines, email){
+async function isEmailExists(lines, email) {
   for await (const line of lines) {
     if (line === email) {
       return true;
