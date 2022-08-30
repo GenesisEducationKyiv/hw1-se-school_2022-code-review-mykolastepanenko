@@ -13,23 +13,20 @@ export async function writeEmail(email) {
 
   input.close();
 
-  if (!isExistsEmail) {
-    const output = fs.createWriteStream(fileUrl, {
-      flags: ALLOW_APPENDING_FLAG,
-    });
-    const stats = await fs.promises.stat(fileUrl);
-    const size = stats.size;
+  if (isExistsEmail) return false;
+  const output = fs.createWriteStream(fileUrl, {
+    flags: ALLOW_APPENDING_FLAG,
+  });
+  const stats = await fs.promises.stat(fileUrl);
+  const size = stats.size;
 
-    if (size === 0) {
-      output.write(email);
-    } else {
-      output.write(EOL + email);
-    }
-    output.end();
-    return true;
+  if (size === 0) {
+    output.write(email);
+  } else {
+    output.write(EOL + email);
   }
-
-  return false;
+  output.end();
+  return true;
 }
 
 export async function getEmails() {

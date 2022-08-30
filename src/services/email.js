@@ -23,7 +23,7 @@ export async function sendEmails(emails) {
   // надсилання листiв
   for (const email of emails) {
     try {
-      transporter.sendMail({
+      await transporter.sendMail({
         from: user,
         to: email,
         subject: "Bitcoin price by Mykola Stepanenko",
