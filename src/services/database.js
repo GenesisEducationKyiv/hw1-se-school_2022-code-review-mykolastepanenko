@@ -3,43 +3,46 @@ import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
 
-const fileUrl = "./src/database/emails.txt";
+const FILE_URL = "./src/database/emails.txt";
 
 export async function writeEmail(email) {
-  const input = fs.createReadStream(fileUrl, "utf-8");
-  const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
-
-  let isExistsEmail = await isEmailExists(lines, email);
-
-  input.close();
-
+  const isExistsEmail = await actionInReadStream(
+    FILE_URL,
+    isEmailExists,
+    email
+  );
   if (isExistsEmail) return false;
-  const output = fs.createWriteStream(fileUrl, {
-    flags: ALLOW_APPENDING_FLAG,
-  });
-  const stats = await fs.promises.stat(fileUrl);
-  const size = stats.size;
 
-  if (size === 0) {
-    output.write(email);
-  } else {
-    output.write(EOL + email);
-  }
-  output.end();
+  await actionInWriteStream(FILE_URL, writeEmailToFile, email);
+
   return true;
 }
 
 export async function getEmails() {
-  let emails = [];
-  const input = fs.createReadStream(fileUrl, "utf-8");
-
-  const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
-
-  for await (const email of lines) {
-    emails.push(email);
-  }
+  const emails = await actionInReadStream(FILE_URL, getEmailsCallback);
 
   return emails;
+}
+
+async function actionInReadStream(file = FILE_URL, callback, ...args) {
+  const input = fs.createReadStream(FILE_URL, "utf-8");
+  const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
+
+  const result = await callback(lines, ...args);
+
+  input.close();
+
+  if (result) return result;
+}
+
+async function actionInWriteStream(file = FILE_URL, callback, ...args) {
+  const output = fs.createWriteStream(FILE_URL, {
+    flags: ALLOW_APPENDING_FLAG,
+  });
+
+  await callback(output, ...args);
+
+  output.end();
 }
 
 async function isEmailExists(lines, email) {
@@ -48,4 +51,25 @@ async function isEmailExists(lines, email) {
       return true;
     }
   }
+}
+
+async function writeEmailToFile(output, email) {
+  const stats = await fs.promises.stat(FILE_URL);
+  const size = stats.size;
+
+  if (size === 0) {
+    output.write(email);
+  } else {
+    output.write(EOL + email);
+  }
+}
+
+async function getEmailsCallback(lines){
+  const emails = [];
+
+  for await (const email of lines) {
+    emails.push(email);
+  }
+
+  return emails;
 }
