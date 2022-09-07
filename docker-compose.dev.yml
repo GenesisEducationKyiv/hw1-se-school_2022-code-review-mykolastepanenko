@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  server:
+    build: .
+    command: npm run dev
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - C:\Users\user\Desktop\learn\genesis-homework\hw1-se-school_2022-code-review-mykolastepanenko:/genesis-test
