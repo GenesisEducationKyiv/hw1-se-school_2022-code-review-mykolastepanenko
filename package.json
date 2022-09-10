@@ -8,7 +8,8 @@
     "start": "node ./src/app.js",
     "dev": "nodemon --legacy-watch ./src/app.js",
     "test": "jest",
-    "e2e": "node ./src/tests/e2e/checkPriceAndCurrency.js"
+    "e2e": "node ./src/tests/e2e/checkPriceAndCurrency.js",
+    "e2e-dev": "jest --watch"
   },
   "keywords": [],
   "author": "Mykolai Stepanenko",
