@@ -28,6 +28,6 @@ export async function getCurrency(page) {
 export async function getPrice(page) {
   return await page.evaluate(() => {
     const result = document.querySelector(".css-12ujz79").textContent.slice(2);
-    return parseInt(result);
+    return parseFloat(result);
   });
 }

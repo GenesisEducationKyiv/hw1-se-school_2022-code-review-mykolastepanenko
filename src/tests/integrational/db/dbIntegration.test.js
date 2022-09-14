@@ -1,4 +1,4 @@
-import { writeEmail } from "../../services/database.js";
+import { writeEmail } from "../../../services/database.js";
 import { createTestTxtFile, deleteTestTxtFile } from "./mocks.js";
 
 describe("Test of actions with db (txt file)", () => {
