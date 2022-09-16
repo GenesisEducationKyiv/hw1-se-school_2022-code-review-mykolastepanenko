@@ -1,3 +1,5 @@
+import { EMAIL_REGEXP } from "../config/consts.js";
+
 export function checkEmail(req, res, next) {
   const email = req.body.email;
   if (!email) {
@@ -5,9 +7,7 @@ export function checkEmail(req, res, next) {
     return;
   }
 
-  const reg =
-    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-  const isValid = reg.test(email);
+  const isValid = EMAIL_REGEXP.test(email);
   if (!isValid) {
     res.status(400).json("Incorrect email");
     return;

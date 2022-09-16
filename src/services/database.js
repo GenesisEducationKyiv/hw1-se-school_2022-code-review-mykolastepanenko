@@ -1,7 +1,8 @@
 import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
-import { ALLOW_APPENDING_FLAG, DB_FILE } from "../config/consts.js";
+import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
+import { DB_FILE } from "../config/config.js";
 
 const fileUrl = `./src/database/${DB_FILE}`;
 

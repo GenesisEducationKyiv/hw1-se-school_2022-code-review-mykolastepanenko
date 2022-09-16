@@ -1,4 +1,4 @@
-import { CURRENCY } from "../config/consts.js";
+import { CURRENCY } from "../config/config.js";
 import * as service from "../services/rate.js";
 
 export async function getRate(req, res) {

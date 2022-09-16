@@ -1,7 +1,8 @@
 import nodemailer from "nodemailer";
 import { getRate } from "./rate.js";
-import { mailConfig } from "../config/config.js";
-import { CURRENCY } from "../config/consts.js";
+import { config, CURRENCY} from "../config/config.js";
+
+const { mailConfig } = config;
 
 export async function sendEmails(emails) {
   const { user, pass, host, port } = mailConfig;

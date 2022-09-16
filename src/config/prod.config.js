@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 export function init() {
-  dotenv.config({ path: "./.env.test" });
+  dotenv.config({ path: "./.env" });
   return {
     mailConfig: {
       host: process.env.MAIL_HOST,

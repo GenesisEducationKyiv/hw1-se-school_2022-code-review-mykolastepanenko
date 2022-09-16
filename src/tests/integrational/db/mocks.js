@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { DB_FILE } from "../../../config/consts";
+import { DB_FILE } from "../../../config/config.js";
 
 export async function createTestTxtFile() {
   try {
