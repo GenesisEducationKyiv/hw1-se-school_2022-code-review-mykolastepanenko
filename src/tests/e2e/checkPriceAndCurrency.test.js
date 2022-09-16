@@ -9,7 +9,7 @@ describe("E2E testing Binance", () => {
   const cryptocurrency = "BTC";
   const currency = "USD";
 
-  jest.setTimeout(12 * 1000);
+  jest.setTimeout(60 * 1000);
 
   test(`Check cryptocurrency equals ${cryptocurrency}`, async () => {
     expect(await actionInBinance(getCryptocurrency)).toBe(cryptocurrency);

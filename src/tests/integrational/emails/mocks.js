@@ -1,29 +1,20 @@
 import nodemailer from "nodemailer";
+import { config } from "../../../config/config.js";
 
 export async function testSendingEmail() {
-  nodemailer.createTestAccount(async (err, account) => {
-    if (err) throw new Error(err);
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false,
-      auth: {
-        user: account.user,
-        pass: account.pass,
-      },
-    });
+  const { mailConfig } = await config;
 
-    try {
-      const res = await transporter.sendMail({
-        from: account.user,
-        to: "Nikolaua36@gmail.com",
-        subject: "test subject",
-        html: `test mail`,
-      });
-      console.log("res below");
-      expect(res).toBe(false);
-    } catch (err) {
-      throw new Error(err);
-    }
-  });
+  const transporter = nodemailer.createTransport(mailConfig);
+
+  try {
+    const res = await transporter.sendMail({
+      from: mailConfig.user,
+      to: "example@mail.test",
+      subject: "test subject",
+      html: `test mail`,
+    });
+    expect(res.accepted.length > 0).toBe(true);
+  } catch (err) {
+    throw new Error(err);
+  }
 }
