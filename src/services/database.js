@@ -2,8 +2,9 @@ import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
+import { DB_FILE } from "../config/config.js";
 
-const FILE_URL = "./src/database/emails.txt";
+const fileUrl = `./src/database/${DB_FILE}`;
 
 export async function writeEmail(email) {
   const isExistsEmail = await actionInReadStream(
