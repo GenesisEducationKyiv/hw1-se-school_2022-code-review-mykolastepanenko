@@ -1,4 +1,4 @@
 node_modules
 .env
+.env.dev
 .env.test
-src/database/emails.test.txt
