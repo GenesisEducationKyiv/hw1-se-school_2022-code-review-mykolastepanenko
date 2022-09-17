@@ -8,25 +8,25 @@ const fileUrl = `./src/database/${DB_FILE}`;
 
 export async function writeEmail(email) {
   const isExistsEmail = await actionInReadStream(
-    FILE_URL,
+    fileUrl,
     isEmailExists,
     email
   );
   if (isExistsEmail) return false;
 
-  await actionInWriteStream(FILE_URL, writeEmailToFile, email);
+  await actionInWriteStream(fileUrl, writeEmailToFile, email);
 
   return true;
 }
 
 export async function getEmails() {
-  const emails = await actionInReadStream(FILE_URL, getEmailsCallback);
+  const emails = await actionInReadStream(fileUrl, getEmailsCallback);
 
   return emails;
 }
 
-async function actionInReadStream(file = FILE_URL, callback, ...args) {
-  const input = fs.createReadStream(FILE_URL, "utf-8");
+async function actionInReadStream(file = fileUrl, callback, ...args) {
+  const input = fs.createReadStream(fileUrl, "utf-8");
   const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
 
   const result = await callback(lines, ...args);
@@ -36,8 +36,8 @@ async function actionInReadStream(file = FILE_URL, callback, ...args) {
   if (result) return result;
 }
 
-async function actionInWriteStream(file = FILE_URL, callback, ...args) {
-  const output = fs.createWriteStream(FILE_URL, {
+async function actionInWriteStream(file = fileUrl, callback, ...args) {
+  const output = fs.createWriteStream(fileUrl, {
     flags: ALLOW_APPENDING_FLAG,
   });
 
@@ -55,7 +55,7 @@ async function isEmailExists(lines, email) {
 }
 
 async function writeEmailToFile(output, email) {
-  const stats = await fs.promises.stat(FILE_URL);
+  const stats = await fs.promises.stat(fileUrl);
   const size = stats.size;
 
   if (size === 0) {
