@@ -1,11 +1,13 @@
-import { writeEmail, getEmails } from "../services/database.js";
+import { FileDBRepository } from "../services/database.js";
 import * as service from "../services/email.js";
+
+const db = new FileDBRepository();
 
 export async function subscribe(req, res) {
   const email = req.body.email;
 
   try {
-    const isSubscribed = await writeEmail(email);
+    const isSubscribed = await db.save(email);
     if (!isSubscribed) {
       res.status(409).json("E-mail вже є в базі даних (файловій)");
       return;
@@ -17,7 +19,7 @@ export async function subscribe(req, res) {
 }
 
 export async function sendEmails(req, res) {
-  const emails = await getEmails();
+  const emails = await db.getAll();
   const result = await service.sendEmails(emails);
   if (result.ok) {
     res.status(200).json("E-mail'и відправлено");

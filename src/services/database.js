@@ -3,74 +3,94 @@ import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
 import { DB_FILE } from "../config/config.js";
+import { IDBRepository } from "./repos.js";
 
-const fileUrl = `./src/database/${DB_FILE}`;
+class FileDBRepository extends IDBRepository {
+  fileUrl = `./src/database/${DB_FILE}`;
 
-export async function writeEmail(email) {
-  const isExistsEmail = await actionInReadStream(
-    fileUrl,
-    isEmailExists,
-    email
-  );
-  if (isExistsEmail) return false;
+  async save(email) {
+    const isExistsEmail = await this._actionInReadStream(
+      this.fileUrl,
+      this._isEmailExists,
+      email
+    );
+    if (isExistsEmail) return false;
 
-  await actionInWriteStream(fileUrl, writeEmailToFile, email);
+    await this._actionInWriteStream(
+      this.fileUrl,
+      this._writeEmailToFileCallback,
+      email,
+      this.fileUrl
+    );
 
-  return true;
-}
+    return true;
+  }
 
-export async function getEmails() {
-  const emails = await actionInReadStream(fileUrl, getEmailsCallback);
+  async getAll() {
+    const emails = await this._actionInReadStream(
+      this.fileUrl,
+      this._getEmailsCallback
+    );
 
-  return emails;
-}
+    return emails;
+  }
 
-async function actionInReadStream(file = fileUrl, callback, ...args) {
-  const input = fs.createReadStream(fileUrl, "utf-8");
-  const lines = readline.createInterface({ input: input, crlfDelay: Infinity });
+  async _actionInReadStream(fileUrl = this.fileUrl, callback, ...args) {
+    const input = fs.createReadStream(fileUrl, "utf-8");
+    const lines = readline.createInterface({
+      input: input,
+      crlfDelay: Infinity,
+    });
 
-  const result = await callback(lines, ...args);
+    const result = await callback(lines, ...args);
 
-  input.close();
+    input.close();
 
-  if (result) return result;
-}
+    if (result) return result;
+  }
 
-async function actionInWriteStream(file = fileUrl, callback, ...args) {
-  const output = fs.createWriteStream(fileUrl, {
-    flags: ALLOW_APPENDING_FLAG,
-  });
+  async _actionInWriteStream(fileUrl = this.fileUrl, callback, ...args) {
+    const output = fs.createWriteStream(fileUrl, {
+      flags: ALLOW_APPENDING_FLAG,
+    });
 
-  await callback(output, ...args);
+    await callback(output, ...args);
 
-  output.end();
-}
+    output.end();
+  }
 
-async function isEmailExists(lines, email) {
-  for await (const line of lines) {
-    if (line === email) {
-      return true;
+  async _isEmailExists(lines, email) {
+    for await (const line of lines) {
+      if (line === email) {
+        return true;
+      }
     }
   }
-}
 
-async function writeEmailToFile(output, email) {
-  const stats = await fs.promises.stat(fileUrl);
-  const size = stats.size;
+  async _writeEmailToFileCallback(output, email, fileUrl) {
+    const stats = await fs.promises.stat(fileUrl);
+    const size = stats.size;
 
-  if (size === 0) {
-    output.write(email);
-  } else {
-    output.write(EOL + email);
+    if (size === 0) {
+      output.write(email);
+    } else {
+      output.write(EOL + email);
+    }
+  }
+
+  async _getEmailsCallback(lines) {
+    const emails = [];
+
+    for await (const email of lines) {
+      emails.push(email);
+    }
+
+    return emails;
   }
 }
 
-async function getEmailsCallback(lines){
-  const emails = [];
+export { FileDBRepository };
 
-  for await (const email of lines) {
-    emails.push(email);
-  }
+// export async function writeEmail(email) {}
 
-  return emails;
-}
+// export async function getEmails() {}
