@@ -2,8 +2,9 @@ import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
+import { DB_FILE } from "../config/config.js";
 
-const fileUrl = "./src/database/emails.txt";
+const fileUrl = `./src/database/${DB_FILE}`;
 
 export async function writeEmail(email) {
   const input = fs.createReadStream(fileUrl, "utf-8");

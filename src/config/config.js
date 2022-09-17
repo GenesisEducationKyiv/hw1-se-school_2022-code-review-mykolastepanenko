@@ -1,10 +1,31 @@
-import dotenv from "dotenv";
-dotenv.config();
+import * as prodConfig from "./prod.config.js";
+import * as devConfig from "./dev.config.js";
+import * as testConfig from "./test.config.js";
 
-export const port = process.env.PORT;
-export const mailConfig = {
-  user: process.env.MAIL_USER,
-  pass: process.env.MAIL_PASS,
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
-};
+async function getConfig() {
+  let config = {};
+
+  switch (process.env.NODE_ENV) {
+    case "production":
+      config = prodConfig.init();
+      break;
+    case "development":
+      config = devConfig.init();
+      break;
+    case "test":
+      config = await testConfig.init();
+      break;
+    default:
+      throw new Error("ENV MODE NOT SPECIFIED");
+  }
+  return {
+    ...config,
+    port: process.env.PORT || 3000,
+  };
+}
+
+const config = getConfig();
+
+export const CURRENCY = process.env.CURRENCY;
+export const DB_FILE = process.env.DB_FILE;
+export { config };
