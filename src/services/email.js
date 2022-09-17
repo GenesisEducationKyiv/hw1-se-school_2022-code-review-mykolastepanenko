@@ -1,11 +1,13 @@
 import nodemailer from "nodemailer";
 import { getRate } from "./rate.js";
-import { mailConfig } from "../config/config.js";
+import { config, CURRENCY} from "../config/config.js";
+
+const { mailConfig } = config;
 
 export async function sendEmails(emails) {
   const { user, pass, host, port } = mailConfig;
 
-  const price = await getRate("UAH");
+  const price = await getRate(CURRENCY);
   if (!price.ok) {
     return { ok: false, error: price.error };
   }
