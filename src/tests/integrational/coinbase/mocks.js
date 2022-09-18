@@ -1,9 +1,10 @@
 import axios from "axios";
-import { getRate } from "../../../services/rate.js";
+import RateService from "../../../services/rate.js";
 import { floorFraction } from "../../../services/math.js";
 
 export async function isPriceEqual(currency) {
-  const promises = [getRate(currency), getRateMock(currency)];
+  const service = new RateService();
+  const promises = [service.getRate(currency), getRateMock(currency)];
 
   try {
     const [prodRes, mockRes] = await Promise.all(promises);
