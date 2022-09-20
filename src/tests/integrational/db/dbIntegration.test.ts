@@ -1,5 +1,5 @@
-import { FileDBRepository } from "../../../services/database.js";
-import { createTestTxtFile, deleteTestTxtFile } from "./mocks.js";
+import { FileDBRepository } from "../../../services/database";
+import { createTestTxtFile, deleteTestTxtFile } from "./mocks";
 
 describe("Test of actions with db (txt file)", () => {
   const email = `test${(Math.random() * 100).toString().slice(0, 3)}@test.test`;

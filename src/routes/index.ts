@@ -1,7 +1,7 @@
 import { Router } from "express";
-import home from "./home.js";
-import notFound from "./404.js";
-import v1 from "./api/v1.js";
+import home from "./home";
+import notFound from "./404";
+import v1 from "./api/v1";
 
 const router = Router();
 

@@ -1,5 +1,5 @@
-import { CURRENCY } from "../config/config.js";
-import RateService from "../services/rate.js";
+import { CURRENCY } from "../config/config";
+import RateService from "../services/rate";
 
 export async function getRate(req, res) {
   const service = new RateService();

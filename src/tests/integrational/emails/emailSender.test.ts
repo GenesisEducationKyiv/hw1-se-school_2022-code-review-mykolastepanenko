@@ -1,4 +1,4 @@
-import { testSendingEmail } from "./mocks.js";
+import { testSendingEmail } from "./mocks";
 
 describe("Testing email service", () => {
   test("Test of send emails", async () => {

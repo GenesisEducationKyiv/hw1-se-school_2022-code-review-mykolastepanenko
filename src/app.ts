@@ -1,7 +1,7 @@
 import express from "express";
-import router from "./routes/index.js";
-import middleware from "./middleware/index.js";
-import { config } from "./config/config.js";
+import router from "./routes/index";
+import middleware from "./middleware/index";
+import { config } from "./config/config";
 
 (async () => {
   const app = express();

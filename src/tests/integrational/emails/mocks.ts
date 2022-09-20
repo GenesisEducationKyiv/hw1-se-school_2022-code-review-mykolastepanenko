@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { config } from "../../../config/config.js";
+import { config } from "../../../config/config";
 
 export async function testSendingEmail() {
   const { mailConfig } = await config;
@@ -14,7 +14,7 @@ export async function testSendingEmail() {
       html: `test mail`,
     });
     expect(res.accepted.length > 0).toBe(true);
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(err);
   }
 }

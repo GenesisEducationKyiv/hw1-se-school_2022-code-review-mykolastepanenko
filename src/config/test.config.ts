@@ -12,7 +12,7 @@ async function getMailerInstance() {
   try {
     const mailConfig = await createMailerInstance();
     return mailConfig;
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(err);
   }
 }

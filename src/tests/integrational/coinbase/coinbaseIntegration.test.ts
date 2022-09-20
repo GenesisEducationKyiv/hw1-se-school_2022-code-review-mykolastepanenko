@@ -1,6 +1,6 @@
-import RateService from "../../../services/rate.js";
-import { CURRENCY } from "../../../config/config.js";
-import { isPriceEqual } from "./mocks.js";
+import RateService from "../../../services/rate";
+import { CURRENCY } from "../../../config/config";
+import { isPriceEqual } from "./mocks";
 
 describe("Test of Coinbase API integration", () => {
   test('Check the currency. Should be "UAH"', () => {

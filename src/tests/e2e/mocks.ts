@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer";
 
-export async function actionInBinance(callback) {
+export async function actionInBinance(callback: any) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
 
@@ -13,21 +13,21 @@ export async function actionInBinance(callback) {
   return result;
 }
 
-export async function getCryptocurrency(page) {
+export async function getCryptocurrency(page: any) {
   return await page.evaluate(() => {
-    return document.querySelector(".css-1iveb5f").textContent;
+    return document.querySelector(".css-1iveb5f")?.textContent;
   });
 }
 
-export async function getCurrency(page) {
+export async function getCurrency(page: any) {
   return await page.evaluate(() => {
-    return document.querySelector(".bn-sdd-input.css-rivkf9").value.slice(0, 3);
+    return (document.querySelector(".bn-sdd-input.css-rivkf9") as HTMLInputElement).value.slice(0, 3);
   });
 }
 
-export async function getPrice(page) {
+export async function getPrice(page: any) {
   return await page.evaluate(() => {
-    const result = document.querySelector(".css-12ujz79").textContent.slice(2);
+    const result: any = document.querySelector(".css-12ujz79")?.textContent?.slice(2);
     return parseFloat(result);
   });
 }

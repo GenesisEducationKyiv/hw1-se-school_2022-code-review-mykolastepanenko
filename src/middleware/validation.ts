@@ -1,4 +1,4 @@
-import { EMAIL_REGEXP } from "../config/consts.js";
+import { EMAIL_REGEXP } from "../config/consts";
 
 export function checkEmail(req, res, next) {
   const email = req.body.email;

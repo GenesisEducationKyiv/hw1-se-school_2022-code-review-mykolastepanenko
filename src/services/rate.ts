@@ -1,8 +1,8 @@
 import axios from "axios";
 import NodeCache from "node-cache";
-import { CRYPTO_CURRENCY_PROVIDER } from "../config/config.js";
+import { CRYPTO_CURRENCY_PROVIDER } from "../config/config";
 
-import Logger from "./logger.js";
+import Logger from "./logger";
 
 const rateCache = new NodeCache({
   stdTTL: 5 * 60,
@@ -23,13 +23,13 @@ class BinanceProviderCreator extends RateFactoryCreator {
 }
 
 class RateProvider {
-  async getRate() {}
+  async getRate(currency: string) {}
 }
 
 class CoinbaseProvider extends RateProvider {
-  next;
+  next: any;
 
-  async getRate(currency) {
+  async getRate(currency: string) {
     try {
       const response = await axios.get(
         `https://api.coinbase.com/v2/prices/spot?currency=${currency.toUpperCase()}`
@@ -41,7 +41,7 @@ class CoinbaseProvider extends RateProvider {
         source: "coinbase",
         currency: currency.toUpperCase(),
       };
-    } catch (err) {
+    } catch (err: any) {
       const next = this.next.getRate(currency);
       if (next) {
         console.log(this.constructor.name, "FAILED");
@@ -51,16 +51,16 @@ class CoinbaseProvider extends RateProvider {
     }
   }
 
-  setNext(provider) {
+  setNext(provider: any) {
     this.next = provider;
     return this.next;
   }
 }
 
 class BinanceProvider extends RateProvider {
-  next;
+  next: any;
 
-  async getRate(currency) {
+  async getRate(currency: string) {
     try {
       const response = await axios.get(
         `https://api.binance.com/api/v3/avgPrice?symbol=BTC${currency.toUpperCase()}`
@@ -72,7 +72,7 @@ class BinanceProvider extends RateProvider {
         source: "binance",
         currency: currency.toUpperCase(),
       };
-    } catch (err) {
+    } catch (err: any) {
       const next = this.next.getRate(currency);
       if (next) {
         console.log(this.constructor.name, "FAILED");
@@ -82,14 +82,14 @@ class BinanceProvider extends RateProvider {
     }
   }
 
-  setNext(provider) {
+  setNext(provider: any) {
     this.next = provider;
     return this.next;
   }
 }
 
 class RateSimpleFactory {
-  createProvider(provider) {
+  createProvider(provider: any) {
     switch (provider.toLowerCase()) {
       case "coinbase":
         return new CoinbaseProviderCreator().createProvider();
@@ -104,7 +104,7 @@ class RateSimpleFactory {
 }
 
 class RateService {
-  async getRate() {
+  async getRate(currency: string) {
     const provider = new RateSimpleFactory().createProvider(
       CRYPTO_CURRENCY_PROVIDER
     );
@@ -118,7 +118,7 @@ class RateService {
       return price;
     } else {
       provider.setNext(new RateSimpleFactory().createProvider("coinbase"));
-      const price = await provider.getRate("UAH");
+      const price = await provider.getRate(currency);
       rateCache.set(CRYPTO_CURRENCY_PROVIDER, price);
       const log = `${CRYPTO_CURRENCY_PROVIDER} - Response: ${JSON.stringify(
         price

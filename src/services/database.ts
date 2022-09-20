@@ -1,14 +1,14 @@
 import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
-import { ALLOW_APPENDING_FLAG } from "../config/consts.js";
-import { DB_FILE } from "../config/config.js";
-import { IDBRepository } from "./repos.js";
+import { ALLOW_APPENDING_FLAG } from "../config/consts";
+import { DB_FILE } from "../config/config";
+import { IDBRepository } from "./repos";
 
-class FileDBRepository extends IDBRepository {
+class FileDBRepository implements IDBRepository {
   fileUrl = `./src/database/${DB_FILE}`;
 
-  async save(email) {
+  async save(email:string): Promise<boolean> {
     const isExistsEmail = await this._actionInReadStream(
       this.fileUrl,
       this._isEmailExists,
@@ -35,7 +35,7 @@ class FileDBRepository extends IDBRepository {
     return emails;
   }
 
-  async _actionInReadStream(fileUrl = this.fileUrl, callback, ...args) {
+  async _actionInReadStream(fileUrl = this.fileUrl, callback: any, ...args: any) {
     const input = fs.createReadStream(fileUrl, "utf-8");
     const lines = readline.createInterface({
       input: input,
@@ -49,7 +49,7 @@ class FileDBRepository extends IDBRepository {
     if (result) return result;
   }
 
-  async _actionInWriteStream(fileUrl = this.fileUrl, callback, ...args) {
+  async _actionInWriteStream(fileUrl = this.fileUrl, callback: any, ...args: any) {
     const output = fs.createWriteStream(fileUrl, {
       flags: ALLOW_APPENDING_FLAG,
     });
@@ -59,7 +59,7 @@ class FileDBRepository extends IDBRepository {
     output.end();
   }
 
-  async _isEmailExists(lines, email) {
+  async _isEmailExists(lines: any, email: string) {
     for await (const line of lines) {
       if (line === email) {
         return true;
@@ -67,7 +67,7 @@ class FileDBRepository extends IDBRepository {
     }
   }
 
-  async _writeEmailToFileCallback(output, email, fileUrl) {
+  async _writeEmailToFileCallback(output: any, email: string, fileUrl: string) {
     const stats = await fs.promises.stat(fileUrl);
     const size = stats.size;
 
@@ -78,7 +78,7 @@ class FileDBRepository extends IDBRepository {
     }
   }
 
-  async _getEmailsCallback(lines) {
+  async _getEmailsCallback(lines: any) {
     const emails = [];
 
     for await (const email of lines) {

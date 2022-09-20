@@ -1,5 +1,5 @@
-import { FileDBRepository } from "../services/database.js";
-import * as service from "../services/email.js";
+import { FileDBRepository } from "../services/database";
+import * as service from "../services/email";
 
 const db = new FileDBRepository();
 
@@ -13,7 +13,7 @@ export async function subscribe(req, res) {
       return;
     }
     res.status(200).json("E-mail додано");
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
   }
 }

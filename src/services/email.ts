@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
-import RateService from "./rate.js";
-import { config, CURRENCY} from "../config/config.js";
+import RateService from "./rate";
+import { config, CURRENCY} from "../config/config";
 
 const { mailConfig } = config;
 
@@ -32,7 +32,7 @@ export async function sendEmails(emails) {
         subject: "Bitcoin price by Mykola Stepanenko",
         html: `BTC/UAH: <strong>${price.value}</strong>.`,
       });
-    } catch (err) {
+    } catch (err: any) {
       console.log(`Помилка надсилання листа на пошту ${email}`);
       console.error(err);
     }

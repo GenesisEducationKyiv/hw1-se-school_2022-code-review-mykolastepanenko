@@ -3,7 +3,7 @@ import {
   getCryptocurrency,
   getCurrency,
   getPrice,
-} from "./mocks.js";
+} from "./mocks";
 
 describe("E2E testing Binance", () => {
   const cryptocurrency = "BTC";
