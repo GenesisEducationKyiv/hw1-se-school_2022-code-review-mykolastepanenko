@@ -1,3 +1,5 @@
+![diagram](https://github.com/GenesisEducationKyiv/hw1-se-school_2022-code-review-mykolastepanenko/blob/hw5/diagram.jpg)
+
 # Genesis Test App
 
 Для запуску програми необхідно, щоб порт 3000 був вільний
