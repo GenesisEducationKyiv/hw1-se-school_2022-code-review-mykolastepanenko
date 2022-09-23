@@ -1,7 +1,8 @@
-import { CURRENCY } from "../config/config";
-import RateService from "../services/rate";
+import { Request, Response } from "express";
+import { CURRENCY } from "../../logic/config/config";
+import RateService from "../../logic/services/rate";
 
-export async function getRate(req, res) {
+export async function getRate(req: Request, res: Response) {
   const service = new RateService();
   const price = await service.getRate(CURRENCY);
   if (price.ok) {

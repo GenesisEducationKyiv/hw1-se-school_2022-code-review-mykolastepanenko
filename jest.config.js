@@ -5,5 +5,5 @@ module.exports = {
   transform: {
     "^.+\\.jsx?$": "babel-jest",
   },
-  setupFiles: ["./src/config/config.ts"],
+  setupFiles: ["./src/logic/config/config.ts"],
 };

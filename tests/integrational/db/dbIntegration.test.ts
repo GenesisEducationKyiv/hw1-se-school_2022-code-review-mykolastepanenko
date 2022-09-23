@@ -1,4 +1,4 @@
-import { FileDBRepository } from "../../../services/database";
+import { FileDBRepository } from "../../../src/logic/services/database";
 import { createTestTxtFile, deleteTestTxtFile } from "./mocks";
 
 describe("Test of actions with db (txt file)", () => {

@@ -6,7 +6,7 @@ import { DB_FILE } from "../config/config";
 import { IDBRepository } from "./repos";
 
 class FileDBRepository implements IDBRepository {
-  fileUrl = `./src/database/${DB_FILE}`;
+  fileUrl = `./src/data/database/${DB_FILE}`;
 
   async save(email:string): Promise<boolean> {
     const isExistsEmail = await this._actionInReadStream(
@@ -90,7 +90,3 @@ class FileDBRepository implements IDBRepository {
 }
 
 export { FileDBRepository };
-
-// export async function writeEmail(email) {}
-
-// export async function getEmails() {}

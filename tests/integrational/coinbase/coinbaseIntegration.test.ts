@@ -1,5 +1,5 @@
-import RateService from "../../../services/rate";
-import { CURRENCY } from "../../../config/config";
+import RateService from "../../../src/logic/services/rate";
+import { CURRENCY } from "../../../src/logic/config/config";
 import { isPriceEqual } from "./mocks";
 
 describe("Test of Coinbase API integration", () => {

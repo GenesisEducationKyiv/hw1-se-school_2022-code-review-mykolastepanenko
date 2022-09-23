@@ -1,6 +1,6 @@
 import axios from "axios";
-import RateService from "../../../services/rate";
-import { floorFraction } from "../../../services/math";
+import RateService from "../../../src/logic/services/rate";
+import { floorFraction } from "../../../src/logic/services/math";
 
 export async function isPriceEqual(currency: string) {
   const service = new RateService();

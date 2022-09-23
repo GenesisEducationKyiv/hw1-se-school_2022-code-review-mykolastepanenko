@@ -4,7 +4,7 @@ import { config, CURRENCY} from "../config/config";
 
 const { mailConfig } = config;
 
-export async function sendEmails(emails) {
+export async function sendEmails(emails: string) {
   const { user, pass, host, port } = mailConfig;
   const rateService = new RateService();
 

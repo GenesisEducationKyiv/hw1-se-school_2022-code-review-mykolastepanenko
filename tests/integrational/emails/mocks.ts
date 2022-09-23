@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { config } from "../../../config/config";
+import { config } from "../../../src/logic/config/config";
 
 export async function testSendingEmail() {
   const { mailConfig } = await config;

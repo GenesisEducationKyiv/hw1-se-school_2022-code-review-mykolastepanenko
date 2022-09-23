@@ -1,9 +1,10 @@
-import { FileDBRepository } from "../services/database";
-import * as service from "../services/email";
+import { Request, Response } from "express";
+import { FileDBRepository } from "../../logic/services/database";
+import * as service from "../../logic/services/email";
 
 const db = new FileDBRepository();
 
-export async function subscribe(req, res) {
+export async function subscribe(req: Request, res: Response) {
   const email = req.body.email;
 
   try {
@@ -18,7 +19,7 @@ export async function subscribe(req, res) {
   }
 }
 
-export async function sendEmails(req, res) {
+export async function sendEmails(req: Request, res: Response) {
   const emails = await db.getAll();
   const result = await service.sendEmails(emails);
   if (result.ok) {

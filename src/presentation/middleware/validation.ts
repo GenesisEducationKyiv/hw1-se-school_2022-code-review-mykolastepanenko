@@ -1,6 +1,7 @@
-import { EMAIL_REGEXP } from "../config/consts";
+import { NextFunction, Request, Response } from "express";
+import { EMAIL_REGEXP } from "../../logic/config/consts";
 
-export function checkEmail(req, res, next) {
+export function checkEmail(req: Request, res: Response, next: NextFunction) {
   const email = req.body.email;
   if (!email) {
     res.status(400).json("Email is required");

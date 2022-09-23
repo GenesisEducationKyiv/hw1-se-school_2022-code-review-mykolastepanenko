@@ -1,7 +1,7 @@
 import express from "express";
-import router from "./routes/index";
-import middleware from "./middleware/index";
-import { config } from "./config/config";
+import router from "./presentation/routes/index";
+import middleware from "./presentation/middleware/index";
+import { config } from "./logic/config/config";
 
 (async () => {
   const app = express();
@@ -11,7 +11,7 @@ import { config } from "./config/config";
   app.use("/", router);
 
   app.listen(port, () => {
-    console.log("MODE:", process.env.NODE_ENV.toUpperCase());
+    console.log("MODE:", process.env.NODE_ENV?.toUpperCase());
     console.log(`http://localhost:${port}`);
   });
 })();
