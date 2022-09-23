@@ -8,3 +8,5 @@ dist
 rate.log
 rate.dev.log
 rate.test.log
+
+diagram.drawio
