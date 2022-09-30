@@ -2,13 +2,16 @@ import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts";
-import { DB_FILE } from "../config/config";
 import { IDBRepository } from "./repos";
 
 class FileDBRepository implements IDBRepository {
-  fileUrl = `./src/data/database/${DB_FILE}`;
+  private fileUrl: string;
 
-  async save(email:string): Promise<boolean> {
+  constructor({ fileUrl }: { fileUrl: string }) {
+    this.fileUrl = fileUrl;
+  }
+
+  async save(email: string): Promise<boolean> {
     const isExistsEmail = await this._actionInReadStream(
       this.fileUrl,
       this._isEmailExists,
@@ -35,7 +38,11 @@ class FileDBRepository implements IDBRepository {
     return emails;
   }
 
-  async _actionInReadStream(fileUrl = this.fileUrl, callback: any, ...args: any) {
+  async _actionInReadStream(
+    fileUrl = this.fileUrl,
+    callback: any,
+    ...args: any
+  ) {
     const input = fs.createReadStream(fileUrl, "utf-8");
     const lines = readline.createInterface({
       input: input,
@@ -49,7 +56,11 @@ class FileDBRepository implements IDBRepository {
     if (result) return result;
   }
 
-  async _actionInWriteStream(fileUrl = this.fileUrl, callback: any, ...args: any) {
+  async _actionInWriteStream(
+    fileUrl = this.fileUrl,
+    callback: any,
+    ...args: any
+  ) {
     const output = fs.createWriteStream(fileUrl, {
       flags: ALLOW_APPENDING_FLAG,
     });
