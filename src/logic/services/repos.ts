@@ -1,5 +1,5 @@
 interface IDBRepository {
-  getAll(): any;
+  getAll(): Promise<Array<string>>;
   save(email: string): Promise<boolean>;
 }
 
