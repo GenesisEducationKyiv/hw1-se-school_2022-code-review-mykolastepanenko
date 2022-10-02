@@ -16,8 +16,10 @@ async function getConfig() {
       config = await testConfig.init();
       break;
     default:
+      console.log(process.env.PORT)
       throw new Error("ENV MODE NOT SPECIFIED");
   }
+  // 
   return {
     ...config,
     port: process.env.PORT || 3000,
