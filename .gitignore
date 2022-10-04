@@ -1,4 +1,9 @@
 node_modules
+
 .env
 .env.dev
 .env.test
+
+rate.log
+rate.dev.log
+rate.test.log

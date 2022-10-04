@@ -28,4 +28,6 @@ const config = getConfig();
 
 export const CURRENCY = process.env.CURRENCY;
 export const DB_FILE = process.env.DB_FILE;
+export const RATE_LOG_FILE = process.env.RATE_LOG_FILE
+export const CRYPTO_CURRENCY_PROVIDER = process.env.CRYPTO_CURRENCY_PROVIDER;
 export { config };

@@ -1,13 +1,14 @@
 import nodemailer from "nodemailer";
-import { getRate } from "./rate.js";
+import RateService from "./rate.js";
 import { config, CURRENCY} from "../config/config.js";
 
 const { mailConfig } = config;
 
 export async function sendEmails(emails) {
   const { user, pass, host, port } = mailConfig;
+  const rateService = new RateService();
 
-  const price = await getRate(CURRENCY);
+  const price = await rateService.getRate(CURRENCY);
   if (!price.ok) {
     return { ok: false, error: price.error };
   }
