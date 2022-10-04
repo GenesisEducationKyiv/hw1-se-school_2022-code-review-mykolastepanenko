@@ -1,7 +1,7 @@
 import NodeCache from "node-cache";
 import { CRYPTO_CURRENCY_PROVIDER } from "../config/config";
 import Logger from "./logger";
-import RateSimpleFactory from "logic/factories/rate";
+import RateSimpleFactory from "../../logic/factories/rate";
 
 const rateCache = new NodeCache({
   stdTTL: 5 * 60,
