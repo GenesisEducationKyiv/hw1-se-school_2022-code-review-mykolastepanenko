@@ -1,4 +1,5 @@
 node_modules
+dist
 
 .env
 .env.dev
@@ -7,3 +8,5 @@ node_modules
 rate.log
 rate.dev.log
 rate.test.log
+
+diagram.drawio
