@@ -9,7 +9,6 @@ import { config } from "./logic/config/config";
 
   middleware(app, express);
   app.use("/", router);
-
   app.listen(port, () => {
     console.log("MODE:", process.env.NODE_ENV?.toUpperCase());
     console.log(`http://localhost:${port}`);

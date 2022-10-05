@@ -1,5 +1,5 @@
 import NodeCache from "node-cache";
-import { CRYPTO_CURRENCY_PROVIDER } from "../config/config";
+import { CRYPTO_CURRENCY_PROVIDER, brokerPublisher } from "../config/config";
 import Logger from "./logger";
 import RateSimpleFactory from "../../logic/factories/rate";
 
@@ -9,27 +9,26 @@ const rateCache = new NodeCache({
 
 class RateService {
   async getRate(currency: string) {
+    let log: string;
+    let price: number;
     const provider = new RateSimpleFactory().createProvider(
       CRYPTO_CURRENCY_PROVIDER
     );
 
     if (rateCache.has(CRYPTO_CURRENCY_PROVIDER)) {
-      const price = rateCache.get(CRYPTO_CURRENCY_PROVIDER);
-      const log = `CACHED ${CRYPTO_CURRENCY_PROVIDER} - Response: ${JSON.stringify(
+      price = rateCache.get(CRYPTO_CURRENCY_PROVIDER);
+      log = `CACHED ${CRYPTO_CURRENCY_PROVIDER} - Response: ${JSON.stringify(
         price
       )}`;
-      Logger.rateLogger(log);
-      return price;
     } else {
       provider.setNext(new RateSimpleFactory().createProvider("coinbase"));
-      const price = await provider.getRate(currency);
+      price = await provider.getRate(currency);
       rateCache.set(CRYPTO_CURRENCY_PROVIDER, price);
-      const log = `${CRYPTO_CURRENCY_PROVIDER} - Response: ${JSON.stringify(
-        price
-      )}`;
-      Logger.rateLogger(log);
-      return price;
+      log = `${CRYPTO_CURRENCY_PROVIDER} - Response: ${JSON.stringify(price)}`;
     }
+    Logger.rateLogger(log);
+    brokerPublisher.send(log);
+    return price;
   }
 }
 

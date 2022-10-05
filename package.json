@@ -7,9 +7,9 @@
     "start": "SET NODE_ENV=production&node ./dist/app.js",
     "dev": "concurrently \"tsc --watch\" \"NODE_ENV=development nodemon ./dist/app.js\"",
     "test": "jest",
-    "test-dev": "jest --watch",
-    "consumer-dev": "concurrently \"tsc --watch\" \"nodemon ./dist/consumer.js\"",
-    "consumer": "concurrently \"tsc\" \"node ./dist/consumer.js\""
+    "test:dev": "jest --watch",
+    "consumer": "concurrently \"tsc --project tsconfig.consumer.json\" \"node ./dist/consumers/consumer-script.js\"",
+    "consumer:dev": "concurrently \"tsc --project tsconfig.consumer.json --watch\" \"nodemon ./dist/consumers/consumer-script.js\""
   },
   "keywords": [],
   "author": "Mykolai Stepanenko",

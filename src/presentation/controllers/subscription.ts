@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 import { FileDBRepository } from "../../logic/services/database";
 import * as service from "../../logic/services/email";
 import RateService from "../../logic/services/rate";
-import { DB_FILE } from "../../logic/config/config";
+import { DB_FILE, brokerPublisher } from "../../logic/config/config";
 
 const db = new FileDBRepository({
-  fileUrl: `./src/data/database/${DB_FILE}`
+  fileUrl: `./src/data/database/${DB_FILE}`,
 });
 
 export async function subscribe(req: Request, res: Response) {
@@ -14,12 +14,16 @@ export async function subscribe(req: Request, res: Response) {
   try {
     const isSubscribed = await db.save(email);
     if (!isSubscribed) {
-      res.status(409).json("E-mail вже є в базі даних (файловій)");
+      const msg = "E-mail вже є в базі даних (файловій)";
+      res.status(409).json(msg);
+      brokerPublisher.send(msg);
       return;
     }
+    brokerPublisher.send(`E-mail додано (${email})`);
     res.status(200).json("E-mail додано");
   } catch (err: any) {
-    res.status(500).json("Неочікувана помилка")
+    res.status(500).json("Неочікувана помилка");
+    brokerPublisher.send(err);
     throw new Error(err);
   }
 }
