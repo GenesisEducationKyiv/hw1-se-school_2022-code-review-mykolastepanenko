@@ -2,7 +2,7 @@ import { EOL } from "os";
 import readline from "readline";
 import fs from "fs";
 import { ALLOW_APPENDING_FLAG } from "../config/consts";
-import { IDBRepository } from "./repos";
+import { IDBRepository } from "./interfaces";
 
 class FileDBRepository implements IDBRepository {
   private fileUrl: string;

@@ -2,12 +2,14 @@
   "name": "genesis-test",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./dist/app.js",
   "scripts": {
     "start": "SET NODE_ENV=production&node ./dist/app.js",
-    "dev": "concurrently \"tsc --watch\" \"SET NODE_ENV=development&nodemon --legacy-watch ./dist/app.js\"",
+    "dev": "concurrently \"tsc --watch\" \"NODE_ENV=development nodemon ./dist/app.js\"",
     "test": "jest",
-    "test-dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "consumer": "concurrently \"tsc --project tsconfig.consumer.json\" \"node ./dist/consumers/consumer-script.js\"",
+    "consumer:dev": "concurrently \"tsc --project tsconfig.consumer.json --watch\" \"nodemon ./dist/consumers/consumer-script.js\""
   },
   "keywords": [],
   "author": "Mykolai Stepanenko",
@@ -17,6 +19,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.18.6",
     "@babel/preset-env": "^7.18.10",
     "@babel/preset-typescript": "^7.18.6",
+    "@types/amqplib": "^0.8.2",
     "@types/express": "^4.17.14",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
@@ -33,6 +36,7 @@
   "dependencies": {
     "-": "0.0.1",
     "@types/multer": "^1.4.7",
+    "amqplib": "^0.10.3",
     "axios": "^0.27.2",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",

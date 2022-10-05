@@ -6,6 +6,15 @@ services:
     command: npm run dev
     restart: always
     ports:
-      - "3000:3000"
+      - "8080:8080"
     volumes:
-      - C:\Users\user\Desktop\learn\genesis-homework\hw1-se-school_2022-code-review-mykolastepanenko:/genesis-test
+      - /home/mykola/.local/share/Trash/files/hw1-se-school_2022-code-review-mykolastepanenko:/genesis-test
+  rabbitmq:
+    container_name: "RabbitMQ"
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
