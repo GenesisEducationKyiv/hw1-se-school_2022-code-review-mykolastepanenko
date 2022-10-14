@@ -6,3 +6,5 @@ up:
 	docker-compose up --build -d
 down:
 	docker-compose down
+docker-logs:
+	docker logs hw1-se-school_2022-code-review-mykolastepanenko_server_1 --follow
