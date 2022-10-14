@@ -1,10 +1,11 @@
 import axios from "axios";
 import { IRateProvider } from "./interfaces";
+import { TRate } from "./types";
 
 export class CoinbaseProvider implements IRateProvider {
   next: any;
 
-  async getRate(currency: string) {
+  async getRate(currency: string): Promise<TRate> {
     try {
       const response = await axios.get(
         `https://api.coinbase.com/v2/prices/spot?currency=${currency.toUpperCase()}`
